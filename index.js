@@ -13,7 +13,8 @@ const server = http.createServer((req, res) => {
     if (req.method === 'OPTIONS') {
       res.statusCode = 204;
     } else {
-      if (req.headers.authorization === 'Basic bXkgdG9rZW4=') {
+      if (req.headers.authorization === 'Basic bXkgdG9rZW4=' &&
+          req.headers.cookie.indexOf('secret_cookey') !== -1) {
         res.write('The top secret code is 123456789.');
       } else {
         res.statusCode = 401;

