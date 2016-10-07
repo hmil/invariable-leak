@@ -1,7 +1,20 @@
 Cache-based chromium information leak
 =====================================
 
-Quick and dirty PoC of a potential information leak I discovered in Chromium.
+**update:** It turns out this is part of the HTTP spec.  
+If a response is meant to be cached, one must use the `Vary` header to tell 
+which request headers may affect the content returned by the server.  
+**A misconfigured app server** may send out a response with `Cache-Control: 
+max-age=123` and no `Vary` header which will cause the browser to cache the
+response and serve it to back later without checking headers such as
+`Authorization` or `Cookie`.
+
+Although this vulnerability is by far less known than the old classics like 
+**XSS** or **SQL injections**, it can have dramatic consequences.
+
+**tl;dr:** Beware of the cache! Use [`Vary`](https://gerrit.corp.appdynamics.com/#/c/84953/).
+
+---
 
 How it works:
 
